@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>TribalEducationNetwork</display-name>
+  <welcome-file-list>
+    <welcome-file>/index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+		<servlet-name>Log4JInitServlet</servlet-name>
+		<servlet-class>com.ten.servlets.Log4JInitServlet</servlet-class>
+		<init-param>
+			<param-name>log4j-properties-location</param-name>
+			<param-value>WEB-INF/log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+ 	 </filter>
+	 
+	<filter-mapping>
+	  	<filter-name>struts2</filter-name>
+	  	<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<security-constraint>   
+        <web-resource-collection>   
+             <web-resource-name>Any url access is protected</web-resource-name>   
+             <url-pattern>/*</url-pattern>   
+        </web-resource-collection>   
+        <auth-constraint>   
+             <role-name>intaker</role-name>   
+             <role-name>annotator</role-name>
+             <role-name>creator</role-name>    
+             <role-name>student</role-name> 
+             <role-name>mentor</role-name> 
+        </auth-constraint>   
+    </security-constraint>  
+        
+	<security-constraint>
+        <display-name>Intaker security constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Area</web-resource-name>
+            <url-pattern>/upload/*</url-pattern>
+            <http-method>DELETE</http-method>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>intaker</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>    
+	
+	<login-config>
+        <auth-method>FORM</auth-method>        
+        <realm-name>Example Form-Based Authentication Area</realm-name>
+        <form-login-config>
+            <form-login-page>/WEB-INF/jsp/login.jsp</form-login-page>
+            <form-error-page>/WEB-INF/jsp/login_failed.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-role>
+        <description> A Digital rights management intaker </description>
+        <role-name>intaker</role-name>
+    </security-role>
+    
+    <security-role>
+        <description> Annotator of digital content </description>
+        <role-name>annotator</role-name>
+    </security-role>
+    
+    <security-role>
+        <description> Course creator </description>
+        <role-name>creator</role-name>
+    </security-role>
+    
+   <security-role>
+        <description> student </description>
+        <role-name>student</role-name>
+    </security-role>
+    
+    <security-role>
+        <description> mentor </description>
+        <role-name>mentor</role-name>
+    </security-role>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <resource-ref>
+      <description>DB Connection</description>
+      <res-ref-name>jdbc/TenDB</res-ref-name>
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+  </resource-ref>
+	
+</web-app>

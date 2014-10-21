@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.multipart.maxSize" value="5000000" /> <!-- 1MB = 1000 * 1024 Bytes -->
+    
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>    
+        
+    <package name="default" namespace="/" extends="struts-default">
+    	<interceptors>
+	 		 <interceptor-stack name="appDefaultStack">
+	  		 	<interceptor-ref name="defaultStack">
+	   		 	 <param name="exception.logEnabled">true</param>
+	   		 	 <param name="exception.logLevel">ERROR</param>
+	    		</interceptor-ref>
+			 </interceptor-stack>
+		</interceptors>	 
+		
+		<default-interceptor-ref name="appDefaultStack" />    
+    
+	    <global-results>
+		    <result name="exception">/WEB-INF/jsp/error.jsp</result>
+		    <result name="runtime_exception">/WEB-INF/jsp/error.jsp</result>
+		    <result name="error">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+	 
+		<global-exception-mappings>
+		    <exception-mapping exception="java.lang.Exception" result="exception"></exception-mapping>
+		    <exception-mapping exception="java.lang.Error" result="error"></exception-mapping>
+		    <exception-mapping exception="java.lang.RuntimeException" result="runtime_exception"></exception-mapping>
+		</global-exception-mappings>
+    
+        <!-- First action to be triggered for the application -->
+		<action name="main" class="com.ten.struts2.actions.MainAction" method="execute">
+		     <result name="success">/WEB-INF/jsp/main.jsp</result>
+		     <result name="input">/WEB-INF/jsp/main.jsp</result>
+		 </action>
+		 
+		 <!-- Action for handling upload & annotation process of image -->
+    	 <action name="upload/uploadimage" 
+            class="com.ten.struts2.actions.UploadImageAction" 
+            method="execute">
+            <interceptor-ref name="appDefaultStack">
+        		<param name="fileUpload.maximumSize">5000000</param>
+          	  	<param name="fileUpload.allowedTypes">image/jpeg,image/gif,image/jpg,image/png,image/bmp</param>
+   			 </interceptor-ref> 
+	        <result name="success">/WEB-INF/jsp/upload_image.jsp</result>
+            <result name="input">/WEB-INF/jsp/upload_image.jsp</result>
+            <result name="showjsp">/WEB-INF/jsp/upload_image.jsp</result>
+     	 </action>
+     	 
+     	 <!-- Action for handling upload & annotation process of video -->
+     	 <action name="upload/uploadvideo" 
+            class="com.ten.struts2.actions.UploadVideoAction" 
+            method="execute">
+            <interceptor-ref name="appDefaultStack">
+        		<param name="fileUpload.maximumSize">5000000</param>
+          	  	<param name="fileUpload.allowedTypes">video/mp4,video/webm,video/ogg</param>
+   			</interceptor-ref> 
+	        <result name="success">/WEB-INF/jsp/upload_video.jsp</result>
+            <result name="input">/WEB-INF/jsp/upload_video.jsp</result>
+            <result name="showjsp">/WEB-INF/jsp/upload_video.jsp</result>
+     	 </action>
+     	 
+     	 <!-- Action for handling upload & annotation process of text -->
+     	 <action name="upload/uploadtext" 
+            class="com.ten.struts2.actions.UploadTextAction" 
+            method="execute">
+            <interceptor-ref name="appDefaultStack">
+       			<param name="fileUpload.maximumSize">5000000</param>
+         	  	<param name="fileUpload.allowedTypes">text/plain, application/pdf</param>
+   			</interceptor-ref> 
+	        <result name="success">/WEB-INF/jsp/upload_text.jsp</result>
+            <result name="input">/WEB-INF/jsp/upload_text.jsp</result>
+            <result name="showjsp">/WEB-INF/jsp/upload_text.jsp</result>
+     	 </action>
+     	 
+     	 <!-- Action for handling upload & annotation process of audio -->
+     	 <action name="upload/uploadaudio" 
+           class="com.ten.struts2.actions.UploadAudioAction" 
+           method="execute">
+           <interceptor-ref name="appDefaultStack">
+       			<param name="fileUpload.maximumSize">5000000</param>
+         	  	<param name="fileUpload.allowedTypes">audio/mpeg,audio/ogg,audio/wav</param>
+		   </interceptor-ref> 
+      	   <result name="success">/WEB-INF/jsp/upload_audio.jsp</result>
+           <result name="input">/WEB-INF/jsp/upload_audio.jsp</result>
+           <result name="showjsp">/WEB-INF/jsp/upload_audio.jsp</result>
+     	 </action>		 
+	</package> 
+</struts>
