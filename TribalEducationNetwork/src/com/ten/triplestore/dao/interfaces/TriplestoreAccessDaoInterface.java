@@ -5,6 +5,7 @@ import com.ten.beans.TenLearningObjectAnnotationsBean;
 public interface TriplestoreAccessDaoInterface {
 	public void queryLearningObject(String learningObjectType) throws Exception;	
 	
+	// adding some comment to test out my first commit
 	//Insert image annotations in triple store
 	public boolean insertImage(TenLearningObjectAnnotationsBean tenLearningObjectAnnotationsBean, int imageId) throws Exception;
 	
