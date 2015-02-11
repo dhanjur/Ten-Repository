@@ -19,7 +19,8 @@ public class Log4JInitServlet extends HttpServlet {
 		String log4jLocation = config.getInitParameter("log4j-properties-location");
 
 		ServletContext sc = config.getServletContext();
-
+		//kriti's first checkin
+		
 		if (log4jLocation == null) {
 			System.err.println("*** No log4j-properties-location init param, so initializing log4j with BasicConfigurator");
 			BasicConfigurator.configure();
